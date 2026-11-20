@@ -1,0 +1,26 @@
+on:
+    push: 
+        branches: 
+            - main
+            - "release/**" # any branch start with realse , like : realease/abdelbari-branch , or realease/testing/ahmed ..ect
+        paths: # just wheen there is a modification in this paths
+            - "src/**" 
+            - "test/**"
+    
+    pull_request: 
+        branches: 
+            - main
+            - "release/**"
+
+
+jobs:
+    testing-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout-project
+              uses: actions/checkout@v6.1.0
+            - run: echo " checking out the project ..."
+            - name: listing the project
+              run: ls -la
+            - name: Run tests
+              run: npm test
