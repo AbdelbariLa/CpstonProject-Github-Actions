@@ -1,6 +1,6 @@
 #!/bin/bash
 
-E="Hello , test"
+E="Hello , Test"
 
 output=$(node -e "console.log(require('./src/app')('Test'))")
 
