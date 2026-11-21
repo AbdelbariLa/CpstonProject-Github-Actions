@@ -11,3 +11,4 @@ else
 echo " test failed , expected : $E , gut got $output"
 exit 1
 fi
+# this script will run in github servers
