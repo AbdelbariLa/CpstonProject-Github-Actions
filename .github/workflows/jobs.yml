@@ -25,4 +25,17 @@ jobs:
     job-4:
         runs-on: ubuntu-latest
         steps:
-            - run: "echo job ${{ github.job }}"   
+            - run: "echo job ${{ github.job }}"
+    
+    npm-job:
+        runs-on: ubuntu-latest
+        steps:
+            - run: |
+                  npm install 
+                  npm run build
+              working-directory: ./temp
+              shell: bash # pwsh (powershell) , cmd , powershell , python ..ect
+
+
+#parerel jobs
+#sequential jobs    

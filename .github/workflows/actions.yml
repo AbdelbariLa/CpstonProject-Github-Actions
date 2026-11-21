@@ -1,0 +1,47 @@
+on: 
+    workflow_dispatch: 
+
+jobs:
+    hybrid-job:
+        runs-on: ubuntu-latest
+        steps: # here the steps will run on vm
+
+            - name: "run a command in ubuntu vm"
+              run: echo "this runs on the ubunutu vm"
+              
+            - name: run inside an alpine container
+              uses: docker://alpine:3.12 # the image must be accessible without authentication (public image dosn't need credentials)
+              with:
+                entrypoint: /bin/sh
+                args: -c echo "this runs inside an alpine container"
+
+            - name: Run another command in ubuntu vm
+              run: echo "back to the vm"
+
+
+    dockerized-repo:
+        runs-on: ubuntu-latest
+        container: 
+            image: node:latest
+            # image: ghcr.io/my-org/my-private-image:latest # the docker image link
+            # credentials:
+            #   username: ${{secrets.Docker_username}}
+            #   password: ${{secrets.Docker_password}}
+        steps: # here , steps will run on container , not on vm
+          - run: node --version
+          - run: echo "this whole job runs inside my private container"
+
+
+    job-Matrix-Strategy:
+        strategy:
+          fail-fast: false # if the job failer , continue don't stop.matrix:
+          max-parallel: 3 # the max of syncronous
+          matrix:
+            os: ["ubuntu-latest","windlows-latest","macos-latest"]
+            node_version: [14.x, 15.x, 16.x]
+        runs-on: ${{ matrix.os }}
+        steps:
+          - name: node
+            uses: actions/setup-node@v3.6.0
+            with:
+                node-version: ${{ matrix.node_version }}
