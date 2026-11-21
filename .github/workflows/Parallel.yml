@@ -4,24 +4,24 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-	  steps:
-	  # this is a standat github variable will show the current job name.
-	  run: echo "job ${{ github.job }}"d
-	  # this will delay the current job until finish the below jobs.
-	  needs: job2 # it can be list , like [job2,job3,..ect]
-	  
+    # this will delay the current job until finish the below jobs.
+    needs: job2 # it can be list , like [job2,job3,..ect]
+    steps:
+      # this is a standat github variable will show the current job name.
+      - run: echo "job ${{ github.job }}"
+
   job2:
-	runs-on: ubuntu-latest
-	steps:
-	  run: echo "job ${{ github.job }}"
-	  needs: [job3,job4]
-	  
-   job3:
-	runs-on: ubuntu-latest
-	steps:
-	  run: echo "job ${{ github.job }}"
-	
-   job4:
-	runs-on: ubuntu-latest
-	steps:
-	  run: echo "job ${{ github.job }}"
+    runs-on: ubuntu-latest
+    needs: [job3, job4]
+    steps:
+      - run: echo "job ${{ github.job }}"
+
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job ${{ github.job }}"
+
+  job4:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job ${{ github.job }}"
