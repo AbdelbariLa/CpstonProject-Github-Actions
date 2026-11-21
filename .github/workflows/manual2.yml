@@ -1,7 +1,8 @@
 on: 
     repository_dispatch: 
         types:
-            - incident_report
+            - "incident_report"
+    
 
 jobs:
     handle-incident:
